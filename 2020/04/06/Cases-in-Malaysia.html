@@ -134,7 +134,7 @@ window.onload = wrap_img;
 
 
 <div class="output_html rendered_html output_subarea output_execute_result">
-<div style="width: 600px; margin: 0 auto;"><div style="float: left; width: 200px">Confirmed Cases<br /><h1>3,662</h1></div><div style="float: right; width: 200px">Deaths<br /><h1>61</h1></div></div>
+<div style="width: 600px; margin: 0 auto;"><div style="float: left; width: 200px">Confirmed Cases<br /><h1>3,662</h1>(+179)</div><div style="float: right; width: 200px">Deaths<br /><h1>61</h1>(+4)</div><div style="float: right; width: 200px">Recovered<br /><h1>1,005</h1>(+90)</div></div>
 </div>
 
 </div>
@@ -157,10 +157,10 @@ window.onload = wrap_img;
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-e01131e9ac7b4fc0b1b9107667879d93"></div>
+<div id="altair-viz-33d97e81eed84493b406af28bc2575f9"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
-    const outputDiv = document.getElementById("altair-viz-e01131e9ac7b4fc0b1b9107667879d93");
+    const outputDiv = document.getElementById("altair-viz-33d97e81eed84493b406af28bc2575f9");
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
       "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
@@ -397,6 +397,272 @@ window.onload = wrap_img;
       <td>3333</td>
       <td>3483</td>
       <td>3662</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+
+<div id="altair-viz-86793685439b4a6d939a5303c2ec2949"></div>
+<script type="text/javascript">
+  (function(spec, embedOpt){
+    const outputDiv = document.getElementById("altair-viz-86793685439b4a6d939a5303c2ec2949");
+    const paths = {
+      "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
+      "vega-lib": "https://cdn.jsdelivr.net/npm//vega-lib?noext",
+      "vega-lite": "https://cdn.jsdelivr.net/npm//vega-lite@4.0.2?noext",
+      "vega-embed": "https://cdn.jsdelivr.net/npm//vega-embed@6?noext",
+    };
+
+    function loadScript(lib) {
+      return new Promise(function(resolve, reject) {
+        var s = document.createElement('script');
+        s.src = paths[lib];
+        s.async = true;
+        s.onload = () => resolve(paths[lib]);
+        s.onerror = () => reject(`Error loading script: ${paths[lib]}`);
+        document.getElementsByTagName("head")[0].appendChild(s);
+      });
+    }
+
+    function showError(err) {
+      outputDiv.innerHTML = `<div class="error" style="color:red;">${err}</div>`;
+      throw err;
+    }
+
+    function displayChart(vegaEmbed) {
+      vegaEmbed(outputDiv, spec, embedOpt)
+        .catch(err => showError(`Javascript Error: ${err.message}<br>This usually means there's a typo in your chart specification. See the javascript console for the full traceback.`));
+    }
+
+    if(typeof define === "function" && define.amd) {
+      requirejs.config({paths});
+      require(["vega-embed"], displayChart, err => showError(`Error loading script: ${err.message}`));
+    } else if (typeof vegaEmbed === "function") {
+      displayChart(vegaEmbed);
+    } else {
+      loadScript("vega")
+        .then(() => loadScript("vega-lite"))
+        .then(() => loadScript("vega-embed"))
+        .catch(showError)
+        .then(() => displayChart(vegaEmbed));
+    }
+  })({"config": {"view": {"continuousWidth": 400, "continuousHeight": 300}}, "data": {"name": "data-68b43d9d479decf858cc2313a99660b6"}, "mark": "bar", "encoding": {"x": {"type": "temporal", "field": "Reported Date"}, "y": {"type": "quantitative", "field": "Reported Cases"}}, "title": "Number of Reported Cases in Malaysia each day", "width": 600, "$schema": "https://vega.github.io/schema/vega-lite/v4.0.2.json", "datasets": {"data-68b43d9d479decf858cc2313a99660b6": [{"Reported Date": "2020-01-22T00:00:00", "Reported Cases": null}, {"Reported Date": "2020-01-23T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-01-24T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-01-25T00:00:00", "Reported Cases": 3.0}, {"Reported Date": "2020-01-26T00:00:00", "Reported Cases": 1.0}, {"Reported Date": "2020-01-27T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-01-28T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-01-29T00:00:00", "Reported Cases": 3.0}, {"Reported Date": "2020-01-30T00:00:00", "Reported Cases": 1.0}, {"Reported Date": "2020-01-31T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-01T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-02T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-03T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-04T00:00:00", "Reported Cases": 2.0}, {"Reported Date": "2020-02-05T00:00:00", "Reported Cases": 2.0}, {"Reported Date": "2020-02-06T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-07T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-08T00:00:00", "Reported Cases": 4.0}, {"Reported Date": "2020-02-09T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-10T00:00:00", "Reported Cases": 2.0}, {"Reported Date": "2020-02-11T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-12T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-13T00:00:00", "Reported Cases": 1.0}, {"Reported Date": "2020-02-14T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-15T00:00:00", "Reported Cases": 3.0}, {"Reported Date": "2020-02-16T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-17T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-18T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-19T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-20T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-21T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-22T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-23T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-24T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-25T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-26T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-27T00:00:00", "Reported Cases": 1.0}, {"Reported Date": "2020-02-28T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-02-29T00:00:00", "Reported Cases": 2.0}, {"Reported Date": "2020-03-01T00:00:00", "Reported Cases": 4.0}, {"Reported Date": "2020-03-02T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-03-03T00:00:00", "Reported Cases": 7.0}, {"Reported Date": "2020-03-04T00:00:00", "Reported Cases": 14.0}, {"Reported Date": "2020-03-05T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-03-06T00:00:00", "Reported Cases": 33.0}, {"Reported Date": "2020-03-07T00:00:00", "Reported Cases": 10.0}, {"Reported Date": "2020-03-08T00:00:00", "Reported Cases": 6.0}, {"Reported Date": "2020-03-09T00:00:00", "Reported Cases": 18.0}, {"Reported Date": "2020-03-10T00:00:00", "Reported Cases": 12.0}, {"Reported Date": "2020-03-11T00:00:00", "Reported Cases": 20.0}, {"Reported Date": "2020-03-12T00:00:00", "Reported Cases": 0.0}, {"Reported Date": "2020-03-13T00:00:00", "Reported Cases": 48.0}, {"Reported Date": "2020-03-14T00:00:00", "Reported Cases": 41.0}, {"Reported Date": "2020-03-15T00:00:00", "Reported Cases": 190.0}, {"Reported Date": "2020-03-16T00:00:00", "Reported Cases": 138.0}, {"Reported Date": "2020-03-17T00:00:00", "Reported Cases": 107.0}, {"Reported Date": "2020-03-18T00:00:00", "Reported Cases": 117.0}, {"Reported Date": "2020-03-19T00:00:00", "Reported Cases": 110.0}, {"Reported Date": "2020-03-20T00:00:00", "Reported Cases": 130.0}, {"Reported Date": "2020-03-21T00:00:00", "Reported Cases": 153.0}, {"Reported Date": "2020-03-22T00:00:00", "Reported Cases": 123.0}, {"Reported Date": "2020-03-23T00:00:00", "Reported Cases": 212.0}, {"Reported Date": "2020-03-24T00:00:00", "Reported Cases": 106.0}, {"Reported Date": "2020-03-25T00:00:00", "Reported Cases": 172.0}, {"Reported Date": "2020-03-26T00:00:00", "Reported Cases": 235.0}, {"Reported Date": "2020-03-27T00:00:00", "Reported Cases": 130.0}, {"Reported Date": "2020-03-28T00:00:00", "Reported Cases": 159.0}, {"Reported Date": "2020-03-29T00:00:00", "Reported Cases": 150.0}, {"Reported Date": "2020-03-30T00:00:00", "Reported Cases": 156.0}, {"Reported Date": "2020-03-31T00:00:00", "Reported Cases": 140.0}, {"Reported Date": "2020-04-01T00:00:00", "Reported Cases": 142.0}, {"Reported Date": "2020-04-02T00:00:00", "Reported Cases": 208.0}, {"Reported Date": "2020-04-03T00:00:00", "Reported Cases": 217.0}, {"Reported Date": "2020-04-04T00:00:00", "Reported Cases": 150.0}, {"Reported Date": "2020-04-05T00:00:00", "Reported Cases": 179.0}]}}, {"mode": "vega-lite"});
+</script>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+<div class="output_html rendered_html output_subarea output_execute_result">
+<div>
+<style scoped="">
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Reported Date</th>
+      <th>2020-01-22</th>
+      <th>2020-01-23</th>
+      <th>2020-01-24</th>
+      <th>2020-01-25</th>
+      <th>2020-01-26</th>
+      <th>2020-01-27</th>
+      <th>2020-01-28</th>
+      <th>2020-01-29</th>
+      <th>2020-01-30</th>
+      <th>2020-01-31</th>
+      <th>2020-02-01</th>
+      <th>2020-02-02</th>
+      <th>2020-02-03</th>
+      <th>2020-02-04</th>
+      <th>2020-02-05</th>
+      <th>2020-02-06</th>
+      <th>2020-02-07</th>
+      <th>2020-02-08</th>
+      <th>2020-02-09</th>
+      <th>2020-02-10</th>
+      <th>2020-02-11</th>
+      <th>2020-02-12</th>
+      <th>2020-02-13</th>
+      <th>2020-02-14</th>
+      <th>2020-02-15</th>
+      <th>2020-02-16</th>
+      <th>2020-02-17</th>
+      <th>2020-02-18</th>
+      <th>2020-02-19</th>
+      <th>2020-02-20</th>
+      <th>2020-02-21</th>
+      <th>2020-02-22</th>
+      <th>2020-02-23</th>
+      <th>2020-02-24</th>
+      <th>2020-02-25</th>
+      <th>2020-02-26</th>
+      <th>2020-02-27</th>
+      <th>2020-02-28</th>
+      <th>2020-02-29</th>
+      <th>2020-03-01</th>
+      <th>2020-03-02</th>
+      <th>2020-03-03</th>
+      <th>2020-03-04</th>
+      <th>2020-03-05</th>
+      <th>2020-03-06</th>
+      <th>2020-03-07</th>
+      <th>2020-03-08</th>
+      <th>2020-03-09</th>
+      <th>2020-03-10</th>
+      <th>2020-03-11</th>
+      <th>2020-03-12</th>
+      <th>2020-03-13</th>
+      <th>2020-03-14</th>
+      <th>2020-03-15</th>
+      <th>2020-03-16</th>
+      <th>2020-03-17</th>
+      <th>2020-03-18</th>
+      <th>2020-03-19</th>
+      <th>2020-03-20</th>
+      <th>2020-03-21</th>
+      <th>2020-03-22</th>
+      <th>2020-03-23</th>
+      <th>2020-03-24</th>
+      <th>2020-03-25</th>
+      <th>2020-03-26</th>
+      <th>2020-03-27</th>
+      <th>2020-03-28</th>
+      <th>2020-03-29</th>
+      <th>2020-03-30</th>
+      <th>2020-03-31</th>
+      <th>2020-04-01</th>
+      <th>2020-04-02</th>
+      <th>2020-04-03</th>
+      <th>2020-04-04</th>
+      <th>2020-04-05</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>Reported Cases</th>
+      <td>NaN</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>3.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>4.0</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>3.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>0.0</td>
+      <td>1.0</td>
+      <td>0.0</td>
+      <td>2.0</td>
+      <td>4.0</td>
+      <td>0.0</td>
+      <td>7.0</td>
+      <td>14.0</td>
+      <td>0.0</td>
+      <td>33.0</td>
+      <td>10.0</td>
+      <td>6.0</td>
+      <td>18.0</td>
+      <td>12.0</td>
+      <td>20.0</td>
+      <td>0.0</td>
+      <td>48.0</td>
+      <td>41.0</td>
+      <td>190.0</td>
+      <td>138.0</td>
+      <td>107.0</td>
+      <td>117.0</td>
+      <td>110.0</td>
+      <td>130.0</td>
+      <td>153.0</td>
+      <td>123.0</td>
+      <td>212.0</td>
+      <td>106.0</td>
+      <td>172.0</td>
+      <td>235.0</td>
+      <td>130.0</td>
+      <td>159.0</td>
+      <td>150.0</td>
+      <td>156.0</td>
+      <td>140.0</td>
+      <td>142.0</td>
+      <td>208.0</td>
+      <td>217.0</td>
+      <td>150.0</td>
+      <td>179.0</td>
     </tr>
   </tbody>
 </table>
