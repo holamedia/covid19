@@ -3,7 +3,7 @@
     
         "post0": {
             "title": "Coronavirus Latest",
-            "content": "2,056,054 Total cases reported worldwide, April 15, 2020 79,863New cases reported since last day511,019 +36,758 (24.85%)Total recovered reported worldwide134,177 +8,193 (6.53%)Total deaths reported worldwide184Total number of countries tracked",
+            "content": "2,056,054 Total cases reported worldwide, April 15, 2020 79,863New cases reported since last day511,019 +36,758 (24.85%)Total recovered reported worldwide134,177 +8,193 (6.53%)Total deaths reported worldwide184Total number of countries tracked df_summary_deaths = df_summary(df_deaths) df_deaths_major = df_summary_deaths[(df_summary_deaths[&#39;New&#39;] &gt; 10) &amp; (df_summary_deaths[&#39;Total&#39;] &gt; 100)].reset_index() alt.Chart(df_deaths_major).mark_bar().encode( alt.X(&#39;Country:N&#39;, sort=&#39;-y&#39;), alt.Y(&#39;Change_Mean_7D:Q&#39;, axis=alt.Axis(format=&#39;%&#39;), title=&#39;Mean Change&#39;), tooltip=list(df_deaths_major) ).properties( width=600, title=&#39;Percentage Change (Mean of 7 Days) of Deaths Case&#39; ) .",
             "url": "https://covid19.holamedia.my/covid-overview/",
             "relUrl": "/covid-overview/",
             "date": " • Apr 16, 2020"
