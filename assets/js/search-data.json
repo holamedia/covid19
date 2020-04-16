@@ -3,7 +3,7 @@
     
         "post0": {
             "title": "Cases in Malaysia",
-            "content": "COVID-19: Malaysia at a Glance . as of April 15, 2020 12PMConfirmed Cases5,072 . (+85)Deaths83 . 1.64% (+1)Recovered2,647 . 52.19% (+169) _base = alt.Chart(df_closed_my.round(6)[[&#39;Date&#39;, &#39;Recovered_Rate&#39;, &#39;Deaths_Rate&#39;]]).encode(x=&#39;Date:T&#39;) _recovered = _base.mark_line(color=&#39;green&#39;).encode( y=alt.Y(&#39;Recovered_Rate:Q&#39;, axis=alt.Axis(format=&#39;%&#39;))) _deaths = _base.mark_line(color=&#39;red&#39;).encode(y=alt.Y(&#39;Deaths_Rate:Q&#39;, axis=alt.Axis(format=&#39;%&#39;))) (_recovered + _deaths).properties(title=&#39;Outcome of Total Closed Case (Recovery Rate vs Death Rate)&#39;, width=600) .",
+            "content": "COVID-19: Malaysia at a Glance . as of April 15, 2020 12PMConfirmed Cases5,072 . (+85)Deaths83 . 1.64% (+1)Recovered2,647 . 52.19% (+169)",
             "url": "https://covid19.holamedia.my/covid-my-overview/",
             "relUrl": "/covid-my-overview/",
             "date": " • Apr 7, 2020"
