@@ -2,6 +2,17 @@
   
     
         "post0": {
+            "title": "Coronavirus Latest",
+            "content": "",
+            "url": "https://covid19.holamedia.my/covid-overview/",
+            "relUrl": "/covid-overview/",
+            "date": " • Apr 16, 2020"
+        }
+        
+    
+  
+    
+        ,"post1": {
             "title": "Cases in Malaysia",
             "content": "COVID-19: Malaysia at a Glance . as of April 15, 2020 12PMConfirmed Cases5,072 . (+85)Deaths83 . 1.64% (+1)Recovered2,647 . 52.19% (+169)",
             "url": "https://covid19.holamedia.my/covid-my-overview/",
