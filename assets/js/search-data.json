@@ -14,7 +14,7 @@
     
         ,"post1": {
             "title": "Cases in Malaysia",
-            "content": "COVID-19: Malaysia at a Glance . as of April 21, 2020 12PMConfirmed Cases5,482 . (+57)Deaths92 . 1.68% (+3)Recovered3,349 . 61.09% (+54)",
+            "content": "COVID-19: Malaysia at a Glance . as of April 22, 2020 12PMConfirmed Cases5,532 . (+50)Deaths93 . 1.68% (+1)Recovered3,452 . 62.40% (+103) Is the curve is flatterning in Malaysia? . Inflection-sensitive chart for detecting successful interventions, from the article &quot;How To Tell If We&#39;re Beating COVID-19&quot;. . Please refer minutephysics for How To Tell If We&#39;re Beating COVID-19 . TypeError Traceback (most recent call last) &lt;ipython-input-27-f2e0c641f005&gt; in &lt;module&gt;() 15 ) 16 &gt; 17 (_new_bar + _average_line + _pkp_line(df_reported_my[&#39;Reported Cases&#39;].max() + 1)).properties( 18 title = f&#39;Daily Reported Cases (with {rolling_window} days average) in Malaysia&#39;, 19 width = 600 &lt;ipython-input-26-e16d2970cc81&gt; in &lt;lambda&gt;(n) 80 _base_ref.transform_filter(alt.datum[&#39;Cases&#39;] &gt; 0).mark_text(text=label, dx=-20, dy=-10, angle=270)) 81 &gt; 82 _pkp_line = lambda n: sum([make_pkp_line(&#39;2020-03-18&#39;, &#39;PKP1&#39;, n), make_pkp_line(&#39;2020-04-01&#39;, &#39;PKP2&#39;, n), make_pkp_line(&#39;2020-04-15&#39;, &#39;PKP3&#39;, n)]) 83 84 _pkp_line(1000) TypeError: unsupported operand type(s) for +: &#39;int&#39; and &#39;LayerChart&#39; .",
             "url": "https://covid19.holamedia.my/covid-my-overview/",
             "relUrl": "/covid-my-overview/",
             "date": " • Apr 7, 2020"
