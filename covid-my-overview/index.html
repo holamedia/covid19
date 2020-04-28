@@ -91,7 +91,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      2 min read
+      1 min read
     
 </span></p>
 
@@ -113,128 +113,6 @@ window.onload = wrap_img;
     
     
 <div class="cell border-box-sizing code_cell rendered">
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#@title Load data and define plot functions</span>
-<span class="c1">#hide</span>
-<span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">altair</span> <span class="k">as</span> <span class="nn">alt</span>
-<span class="kn">import</span> <span class="nn">ipywidgets</span> <span class="k">as</span> <span class="nn">widgets</span>
-<span class="c1">#from jinja2 import Template</span>
-<span class="kn">from</span> <span class="nn">IPython.display</span> <span class="kn">import</span> <span class="n">HTML</span>
-
-<span class="c1">#hide</span>
-<span class="c1"># COVID-19 Data from https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series</span>
-<span class="n">base_url</span> <span class="o">=</span> <span class="s1">&#39;https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data&#39;</span>
-
-<span class="c1"># confirmed, deaths, recovered</span>
-<span class="k">def</span> <span class="nf">get_time_series</span><span class="p">(</span><span class="nb">type</span><span class="p">):</span>
-  <span class="n">_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s1">/csse_covid_19_time_series/time_series_covid19_</span><span class="si">{</span><span class="nb">type</span><span class="si">}</span><span class="s1">_global.csv&#39;</span>
-  <span class="n">_dff</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">_url</span><span class="p">)</span>
-  <span class="n">_cols</span> <span class="o">=</span> <span class="n">_dff</span><span class="o">.</span><span class="n">columns</span><span class="p">[</span><span class="o">~</span><span class="n">_dff</span><span class="o">.</span><span class="n">columns</span><span class="o">.</span><span class="n">isin</span><span class="p">([</span><span class="s1">&#39;Province/State&#39;</span><span class="p">,</span> <span class="s1">&#39;Country/Region&#39;</span><span class="p">,</span> <span class="s1">&#39;Lat&#39;</span><span class="p">,</span> <span class="s1">&#39;Long&#39;</span><span class="p">])]</span>
-  <span class="n">_dff</span> <span class="o">=</span> <span class="p">(</span><span class="n">_dff</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;Country/Region&#39;</span><span class="p">)[</span><span class="n">_cols</span><span class="p">]</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">name</span> <span class="o">=</span> <span class="s1">&#39;Cases&#39;</span><span class="p">)</span>
-        <span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span> <span class="o">=</span> <span class="p">{</span><span class="s1">&#39;level_1&#39;</span><span class="p">:</span> <span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Country/Region&#39;</span><span class="p">:</span> <span class="s1">&#39;Country&#39;</span><span class="p">}))</span>
-  <span class="n">_dff</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">_dff</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">],</span> <span class="nb">format</span><span class="o">=</span><span class="s1">&#39;%m/</span><span class="si">%d</span><span class="s1">/%y&#39;</span><span class="p">)</span>
-  <span class="k">return</span> <span class="n">_dff</span>
-
-<span class="c1"># eg. 03-27-2020</span>
-<span class="k">def</span> <span class="nf">get_df_daily</span><span class="p">(</span><span class="n">date</span><span class="p">):</span>
-  <span class="n">_url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">&#39;</span><span class="si">{</span><span class="n">base_url</span><span class="si">}</span><span class="s1">/csse_covid_19_daily_reports/</span><span class="si">{</span><span class="n">date</span><span class="si">}</span><span class="s1">.csv&#39;</span>
-  <span class="k">return</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="n">_url</span><span class="p">)</span>
-
-<span class="n">df_confirmed</span> <span class="o">=</span> <span class="n">get_time_series</span><span class="p">(</span><span class="s1">&#39;confirmed&#39;</span><span class="p">)</span>
-<span class="n">df_recovered</span> <span class="o">=</span> <span class="n">get_time_series</span><span class="p">(</span><span class="s1">&#39;recovered&#39;</span><span class="p">)</span>
-<span class="n">df_deaths</span> <span class="o">=</span> <span class="n">get_time_series</span><span class="p">(</span><span class="s1">&#39;deaths&#39;</span><span class="p">)</span>
-
-<span class="n">date_latest</span> <span class="o">=</span> <span class="n">df_confirmed</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">max</span><span class="p">()</span>
-
-<span class="k">def</span> <span class="nf">countries_cases</span><span class="p">(</span><span class="n">df</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">5000</span><span class="p">,</span> <span class="n">date_as_of</span><span class="o">=</span><span class="n">date_latest</span><span class="p">):</span>
-  <span class="n">df_latest</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">eq</span><span class="p">(</span><span class="n">date_as_of</span><span class="p">)]</span>
-  <span class="n">df_latest_n</span> <span class="o">=</span> <span class="n">df_latest</span><span class="p">[</span><span class="n">df_latest</span><span class="p">[</span><span class="s1">&#39;Cases&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="n">n</span><span class="p">]</span>
-  <span class="k">return</span> <span class="n">df_latest_n</span>
-
-<span class="c1"># Last n days of type e.g. confirmed, recovered, deaths</span>
-<span class="n">df_last</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">name</span><span class="p">,</span> <span class="n">_df</span><span class="p">,</span> <span class="n">n</span><span class="p">:</span> <span class="n">_df</span><span class="p">[</span><span class="n">_df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">isin</span><span class="p">(</span><span class="n">_df</span><span class="p">[</span><span class="s1">&#39;Date&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">tail</span><span class="p">(</span><span class="n">n</span><span class="p">))]</span><span class="o">.</span><span class="n">set_index</span><span class="p">([</span><span class="s1">&#39;Country&#39;</span><span class="p">,</span> <span class="s1">&#39;Date&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Cases&#39;</span><span class="p">:</span> <span class="n">name</span><span class="p">})</span>
-
-<span class="c1"># Last 2 days all global</span>
-<span class="n">df_summary</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">last_n</span><span class="p">:</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">df_last</span><span class="p">(</span><span class="s1">&#39;Confirmed&#39;</span><span class="p">,</span> <span class="n">df_confirmed</span><span class="p">,</span> <span class="n">last_n</span><span class="p">),</span> <span class="n">df_last</span><span class="p">(</span><span class="s1">&#39;Deaths&#39;</span><span class="p">,</span> <span class="n">df_deaths</span><span class="p">,</span> <span class="n">last_n</span><span class="p">),</span> <span class="n">df_last</span><span class="p">(</span><span class="s1">&#39;Recovered&#39;</span><span class="p">,</span> <span class="n">df_recovered</span><span class="p">,</span> <span class="n">last_n</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-
-<span class="n">df_global</span> <span class="o">=</span> <span class="n">df_summary</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">groupby</span><span class="p">([</span><span class="s1">&#39;Date&#39;</span><span class="p">])</span><span class="o">.</span><span class="n">sum</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span>
-
-<span class="n">df_global_summary</span> <span class="o">=</span> <span class="n">df_global</span><span class="o">.</span><span class="n">stack</span><span class="p">()</span><span class="o">.</span><span class="n">reset_index</span><span class="p">()</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;level_1&#39;</span><span class="p">:</span> <span class="s1">&#39;Type&#39;</span><span class="p">,</span> <span class="mi">0</span><span class="p">:</span> <span class="s1">&#39;Cases&#39;</span><span class="p">})</span>
-
-<span class="c1">#print(date_latest)</span>
-
-<span class="n">s_date_latest</span> <span class="o">=</span> <span class="n">date_latest</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="s2">&quot;%B </span><span class="si">%d</span><span class="s2">, %Y&quot;</span><span class="p">)</span> <span class="c1">#.strftime(&#39;%m/%d/%Y&#39;)</span>
-<span class="n">n_confirmed</span> <span class="o">=</span> <span class="n">df_global</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Confirmed&#39;</span><span class="p">]</span>
-<span class="n">n_deaths</span> <span class="o">=</span> <span class="n">df_global</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Deaths&#39;</span><span class="p">]</span>
-<span class="n">n_recovered</span> <span class="o">=</span> <span class="n">df_global</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Recovered&#39;</span><span class="p">]</span>
-
-<span class="n">df_global_diff</span> <span class="o">=</span> <span class="n">df_global</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
-<span class="n">n_confirmed_diff</span> <span class="o">=</span> <span class="n">df_global_diff</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Confirmed&#39;</span><span class="p">]</span>
-<span class="n">n_deaths_diff</span> <span class="o">=</span> <span class="n">df_global_diff</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Deaths&#39;</span><span class="p">]</span>
-<span class="n">n_recovered_diff</span> <span class="o">=</span> <span class="n">df_global_diff</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Recovered&#39;</span><span class="p">]</span>
-
-<span class="n">weekDays</span> <span class="o">=</span> <span class="p">(</span><span class="s2">&quot;Monday&quot;</span><span class="p">,</span><span class="s2">&quot;Tuesday&quot;</span><span class="p">,</span><span class="s2">&quot;Wednesday&quot;</span><span class="p">,</span><span class="s2">&quot;Thursday&quot;</span><span class="p">,</span><span class="s2">&quot;Friday&quot;</span><span class="p">,</span><span class="s2">&quot;Saturday&quot;</span><span class="p">,</span><span class="s2">&quot;Sunday&quot;</span><span class="p">)</span> 
-
-<span class="n">df_my</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">_df</span><span class="p">:</span> <span class="n">_df</span><span class="p">[</span><span class="n">_df</span><span class="p">[</span><span class="s1">&#39;Country&#39;</span><span class="p">]</span> <span class="o">==</span> <span class="s1">&#39;Malaysia&#39;</span><span class="p">][[</span><span class="s1">&#39;Date&#39;</span><span class="p">,</span> <span class="s1">&#39;Cases&#39;</span><span class="p">]]</span>
-
-<span class="n">df_confirmed_my</span> <span class="o">=</span> <span class="n">df_my</span><span class="p">(</span><span class="n">df_confirmed</span><span class="p">)</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="p">{</span><span class="s1">&#39;Cases&#39;</span><span class="p">:</span> <span class="s1">&#39;Cummulative Cases&#39;</span><span class="p">,</span> <span class="s1">&#39;Date&#39;</span><span class="p">:</span> <span class="s1">&#39;Reported Date&#39;</span><span class="p">})</span>
-<span class="n">df_summary_my</span> <span class="o">=</span> <span class="n">df_summary</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;Malaysia&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">reset_index</span><span class="p">(</span><span class="n">drop</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
-<span class="n">n_confirmed_my</span> <span class="o">=</span> <span class="n">df_summary_my</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Confirmed&#39;</span><span class="p">]</span>
-<span class="n">n_deaths_my</span> <span class="o">=</span> <span class="n">df_summary_my</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Deaths&#39;</span><span class="p">]</span>
-<span class="n">n_recovered_my</span> <span class="o">=</span> <span class="n">df_summary_my</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Recovered&#39;</span><span class="p">]</span>
-
-<span class="n">df_summary_my_diff</span> <span class="o">=</span> <span class="n">df_summary_my</span><span class="o">.</span><span class="n">diff</span><span class="p">()</span>
-<span class="n">n_confirmed_my_diff</span> <span class="o">=</span> <span class="n">df_summary_my_diff</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Confirmed&#39;</span><span class="p">]</span>
-<span class="n">n_deaths_my_diff</span> <span class="o">=</span> <span class="n">df_summary_my_diff</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Deaths&#39;</span><span class="p">]</span>
-<span class="n">n_recovered_my_diff</span> <span class="o">=</span> <span class="n">df_summary_my_diff</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="mi">1</span><span class="p">][</span><span class="s1">&#39;Recovered&#39;</span><span class="p">]</span>
-
-
-<span class="k">def</span> <span class="nf">make_pkp_line</span><span class="p">(</span><span class="n">date</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
-  <span class="n">_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Date&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">date</span><span class="p">,</span> <span class="n">date</span><span class="p">],</span> <span class="s1">&#39;Cases&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="nb">max</span><span class="p">]})</span>
-  <span class="n">_base_ref</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">_df</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Date:T&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Cases:Q&#39;</span><span class="p">)</span>
-  <span class="k">return</span> <span class="p">(</span><span class="n">_base_ref</span><span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">strokeDash</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>  <span class="o">+</span> 
-          <span class="n">_base_ref</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="p">[</span><span class="s1">&#39;Cases&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">)</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">dx</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">dy</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">270</span><span class="p">))</span>
-
-<span class="k">def</span> <span class="nf">make_pkp_line_by_case</span><span class="p">(</span><span class="n">case</span><span class="p">,</span> <span class="n">label</span><span class="p">,</span> <span class="nb">max</span><span class="p">):</span>
-  <span class="n">_df</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">DataFrame</span><span class="p">({</span><span class="s1">&#39;Cummulative Cases&#39;</span><span class="p">:</span> <span class="p">[</span><span class="n">case</span><span class="p">,</span> <span class="n">case</span><span class="p">],</span> <span class="s1">&#39;Cases&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">0.1</span><span class="p">,</span> <span class="nb">max</span><span class="p">]})</span>
-  <span class="n">_base_ref</span> <span class="o">=</span> <span class="n">alt</span><span class="o">.</span><span class="n">Chart</span><span class="p">(</span><span class="n">_df</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">x</span><span class="o">=</span><span class="s1">&#39;Cummulative Cases:Q&#39;</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="s1">&#39;Cases:Q&#39;</span><span class="p">)</span>
-  <span class="k">return</span> <span class="p">(</span><span class="n">_base_ref</span><span class="o">.</span><span class="n">mark_line</span><span class="p">(</span><span class="n">color</span><span class="o">=</span><span class="s1">&#39;black&#39;</span><span class="p">,</span> <span class="n">opacity</span><span class="o">=.</span><span class="mi">5</span><span class="p">,</span> <span class="n">strokeDash</span><span class="o">=</span><span class="p">[</span><span class="mi">3</span><span class="p">,</span><span class="mi">3</span><span class="p">])</span>  <span class="o">+</span> 
-          <span class="n">_base_ref</span><span class="o">.</span><span class="n">transform_filter</span><span class="p">(</span><span class="n">alt</span><span class="o">.</span><span class="n">datum</span><span class="p">[</span><span class="s1">&#39;Cases&#39;</span><span class="p">]</span> <span class="o">&gt;</span> <span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">mark_text</span><span class="p">(</span><span class="n">text</span><span class="o">=</span><span class="n">label</span><span class="p">,</span> <span class="n">dx</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">dy</span><span class="o">=-</span><span class="mi">10</span><span class="p">,</span> <span class="n">angle</span><span class="o">=</span><span class="mi">270</span><span class="p">))</span>
-
-<span class="n">_pkp_line</span> <span class="o">=</span> <span class="k">lambda</span> <span class="n">n</span><span class="p">:</span> <span class="n">make_pkp_line</span><span class="p">(</span><span class="s1">&#39;2020-03-18&#39;</span><span class="p">,</span> <span class="s1">&#39;PKP1&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">make_pkp_line</span><span class="p">(</span><span class="s1">&#39;2020-04-01&#39;</span><span class="p">,</span> <span class="s1">&#39;PKP2&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span> <span class="o">+</span> <span class="n">make_pkp_line</span><span class="p">(</span><span class="s1">&#39;2020-04-15&#39;</span><span class="p">,</span> <span class="s1">&#39;PKP3&#39;</span><span class="p">,</span> <span class="n">n</span><span class="p">)</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;Data loaded and plot functions defined.&#39;</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Data loaded and plot functions defined.
-</pre>
-</div>
-</div>
-
-</div>
-</div>
 
 </div>
     
@@ -279,12 +157,12 @@ window.onload = wrap_img;
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-4e8735626cdf42a3839dd9f9f2c0e853"></div>
+<div id="altair-viz-8b93f8bedb8e46368545074a8f3b7ca5"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-4e8735626cdf42a3839dd9f9f2c0e853") {
-      outputDiv = document.getElementById("altair-viz-4e8735626cdf42a3839dd9f9f2c0e853");
+    if (outputDiv.id !== "altair-viz-8b93f8bedb8e46368545074a8f3b7ca5") {
+      outputDiv = document.getElementById("altair-viz-8b93f8bedb8e46368545074a8f3b7ca5");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
@@ -358,12 +236,12 @@ window.onload = wrap_img;
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-e35e895a80164e6a95f75a30feb812d2"></div>
+<div id="altair-viz-e8fe9e5dbea34e0796e05a704484c225"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-e35e895a80164e6a95f75a30feb812d2") {
-      outputDiv = document.getElementById("altair-viz-e35e895a80164e6a95f75a30feb812d2");
+    if (outputDiv.id !== "altair-viz-e8fe9e5dbea34e0796e05a704484c225") {
+      outputDiv = document.getElementById("altair-viz-e8fe9e5dbea34e0796e05a704484c225");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
@@ -429,12 +307,12 @@ window.onload = wrap_img;
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-f2006c287a6446388938831b73ed2b31"></div>
+<div id="altair-viz-c246dd536f06460bafb8aa21b67b84bc"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-f2006c287a6446388938831b73ed2b31") {
-      outputDiv = document.getElementById("altair-viz-f2006c287a6446388938831b73ed2b31");
+    if (outputDiv.id !== "altair-viz-c246dd536f06460bafb8aa21b67b84bc") {
+      outputDiv = document.getElementById("altair-viz-c246dd536f06460bafb8aa21b67b84bc");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
@@ -500,12 +378,12 @@ window.onload = wrap_img;
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-9dbccf1905824c5890179f942905b879"></div>
+<div id="altair-viz-90727fbab42a44398d6d506bd6047e20"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-9dbccf1905824c5890179f942905b879") {
-      outputDiv = document.getElementById("altair-viz-9dbccf1905824c5890179f942905b879");
+    if (outputDiv.id !== "altair-viz-90727fbab42a44398d6d506bd6047e20") {
+      outputDiv = document.getElementById("altair-viz-90727fbab42a44398d6d506bd6047e20");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
@@ -571,12 +449,12 @@ window.onload = wrap_img;
 
 <div class="output_html rendered_html output_subarea output_execute_result">
 
-<div id="altair-viz-ba2f21c3df9d4769b2056ddf96b8cb8a"></div>
+<div id="altair-viz-63d7a54cde664a6aa165a5dfd6f6e376"></div>
 <script type="text/javascript">
   (function(spec, embedOpt){
     let outputDiv = document.currentScript.previousElementSibling;
-    if (outputDiv.id !== "altair-viz-ba2f21c3df9d4769b2056ddf96b8cb8a") {
-      outputDiv = document.getElementById("altair-viz-ba2f21c3df9d4769b2056ddf96b8cb8a");
+    if (outputDiv.id !== "altair-viz-63d7a54cde664a6aa165a5dfd6f6e376") {
+      outputDiv = document.getElementById("altair-viz-63d7a54cde664a6aa165a5dfd6f6e376");
     }
     const paths = {
       "vega": "https://cdn.jsdelivr.net/npm//vega@5?noext",
